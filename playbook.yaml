@@ -50,3 +50,67 @@
             var: response
       tags:
         - testing
+
+---
+- name: Deploy E-commerce Web Application
+  hosts: http://localhost:3000
+  become: yes
+
+  vars:
+    app_name: "yolomy"
+    database_host: "mongodb://localhost/"
+    database_user: "yolomy"
+
+  roles:
+    - name: Front-end Logic
+      import_role:
+        name: frontend_role
+      tags:
+        - frontend
+
+    - name: Containerization
+      import_role:
+        name: container_role
+      tags:
+        - container
+
+  tasks:
+    - name: Ensure Docker is installed
+      block:
+        - name: Install Docker
+          apt:
+            name: docker.io
+            state: present
+          become: yes
+
+        - name: Start Docker service
+          service:
+            name: docker
+            state: started
+          become: yes
+      tags:
+        - docker
+
+    - name: Clone repository from GitHub
+      git:
+        repo: https://github.com/momureithi/My-IP3-Config-Management-Project.git
+        dest: /path/to/your/project
+      tags:
+        - code
+
+    # Add more tasks for application setup, database configuration, etc.
+
+    - name: Test Web Application
+      block:
+        - name: Test "Add Product" Functionality
+          uri:
+            url: http://localhost/add-product
+            method: POST
+            status_code: 200
+          register: response
+
+        - name: Debug Test Results
+          debug:
+            var: response
+      tags:
+        - testing
