@@ -1,0 +1,52 @@
+# 
+- name: Deploy E-commerce Web Application
+  hosts: http://localhost:3000 
+  become: yes
+
+  tasks:
+    - name: Clone the repository
+      git:
+        repo: https://github.com/momureithi/My-IP3-Config-Management-Project.git
+        dest: /Desktop/Moringa/DevOps04/Projects/Ansible/My-IP3-Config-Management-Project
+      become: yes
+
+    - name: Install Docker
+      block:
+        - name: Install Docker
+          apt:
+            name: docker.io
+            state: present
+          become: yes
+
+        - name: Start Docker service
+          service:
+            name: docker
+            state: started
+          become: yes
+      tags:
+        - docker
+
+    - name: Build and Run Docker Containers
+      block:
+        - name: Build and run the frontend container
+          command: docker run -d -p 3000:3000 my-basic-microservice-container
+
+        - name: Build and run the backend container
+          command: docker run -d -p 5001:5001 my-basic-microservice-container
+      tags:
+        - containers
+
+    - name: Test the Web Application
+      block:
+        - name: Test "Add Product" Functionality
+          uri:
+            url: http://localhost:3000/add-product
+            method: POST
+            status_code: 200
+          register: response
+
+        - name: Debug Test Results
+          debug:
+            var: response
+      tags:
+        - testing
