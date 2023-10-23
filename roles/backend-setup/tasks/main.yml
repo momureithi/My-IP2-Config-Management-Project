@@ -1,0 +1,40 @@
+---
+# tasks file for backend-setup
+- block:
+    - name: Check if the backend directory exists
+      stat:
+        path: '/Desktop/Moringa/DevOps04/Projects/Ansible/My-IP3-Config-Management-Project/backend'
+        register: backend-directory
+
+    - name: Build backend docker image
+      docker_image:
+        name: momureithi/my-basic-microservice:0.2.0
+        source: build
+        build:
+          path: '/Desktop/Moringa/DevOps04/Projects/Ansible/My-IP3-Config-Management-Project/backend'
+      register: backend-image
+      tags:
+        - backend
+
+    - name: Run backend docker container
+      docker_container:
+        name: my-basic-microservice-container
+        image: momureithi/my-basic-microservice:0.2.0
+        state: started
+        volumes:
+          - ./backend:/app/backend/
+          - ./backend:/data/backend # also map to the data container
+        ports:
+          - '5001:5001'
+        networks:
+          - name: myip3-network
+        env:
+          MONGO_URI: 'mongodb://myip3-database-container:27017/yolomy'
+      tags:
+        - backend
+
+  when: backend-folder.stat.isdir is defined and backend-folder.stat.isdir
+  rescue:
+    - name: Handle error during backend dockerization setup
+      debug:
+        msg: 'Backend dockerization setup failed. Please check the logs.'

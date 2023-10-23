@@ -1,0 +1,9 @@
+---
+# tasks file for clone-repository
+- name: Clone the repository
+  git:
+    repo: https://github.com/momureithi/My-IP3-Config-Management-Project.git
+    dest: /Desktop/Moringa/DevOps04/Projects/Ansible/My-IP3-Config-Management-Project
+    update: true
+  tags:
+  - clone

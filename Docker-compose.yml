@@ -1,13 +1,58 @@
-version: '3'
+version: '3.9'
+
 services:
-  web:
-    image: momureithi/my-basic-microservice:0.2
+  client:
+    image: momureithi/my-basic-microservice:0.2.0
+    build:
+      context: ./client
+    container_name: my-basic-microservice-container
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    ports:
+      - '3000:3000'
+    stdin_open: true
+    volumes:
+      - ./client:/app/client/
+    depends_on:
+      - backend
+
+    networks:
+      - myip3-network
+
+  backend:
+    image: momureithi/my-basic-microservice:0.2.0
+    build:
+      context: ./backend
     container_name: my-basic-microservice-container
     ports:
-      - "3000:3000"
+      - '5001:5001'
+    volumes:
+      - ./backend:/app/backend/
     environment:
-      - MONGODB_URI=mongodb://mongo:27017/ecommerce
+      MONGO_URI: mongodb://mongo:27017/yolomy
+
+    depends_on:
+      - mongo
+
+    networks:
+      - myip3-network
 
   mongo:
     image: mongo:latest
-    container_name: ecommerce-mongo
+    container_name: yolo-database
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./mongo-data:/data/db
+    networks:
+      - myip3-network
+
+networks:
+  yolo_network:
+    name: myip3-network
+    driver: bridge
+
+volumes:
+  mongo-data:
+  backend:
+  client:

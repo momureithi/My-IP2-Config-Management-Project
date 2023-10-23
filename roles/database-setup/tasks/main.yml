@@ -1,0 +1,16 @@
+---
+# tasks file for database-setup
+- name: Run MongoDB Container
+  docker_container:
+    name: myip3-database-container
+    image: mongo:latest
+    state: started
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./mongo-data:/data/db
+    networks:
+      - name: myip3-network
+  tags:
+    - database
+    - backend

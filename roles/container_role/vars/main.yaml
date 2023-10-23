@@ -1,3 +1,0 @@
----
-docker_image: momureithi/my-basic-microservice:0.2.0
-container_port: 3000

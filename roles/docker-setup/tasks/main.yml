@@ -1,5 +1,6 @@
 ---
-- name: Install Docker
+# tasks file for docker-setup
+- name: Docker Installation
   apt:
     name: docker.io
     state: present

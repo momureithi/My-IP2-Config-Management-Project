@@ -1,23 +1,46 @@
-# Requirements
+# Yolomy E-commerce Application: Deployment using Ansible & Vagrant
+## Prerequisites
 Make sure that you have the following installed:
-- [node](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-18-04) 
-- npm 
-- [MongoDB](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/) and start the mongodb service with `sudo service mongod start`
+- [Vagrant](https://developer.hashicorp.com/vagrant/downloads)
+- [Ubuntu 22.04 Vagrant Box](https://app.vagrantup.com/centos/boxes/7)
 
-## Navigate to the Client Folder 
- `cd client`
+## Setting up Vagrant
+- To set up Vagrant, follow: [link](https://developer.hashicorp.com/vagrant/downloads).
+- Verify that Vagrant is installed by running:
+  
+  ```vagrant --version```
+  The output should be as this:
+  
+  ```Vagrant 2.4.0```
 
-## Run the folllowing command to install the dependencies 
- `npm install`
+- Upon successful installation of Vagrant, install CentOS/7:
+  
+  ```vagrant box add generic/centos7```
 
-## Run the folllowing to start the app
- `npm start`
+- Upon successful setup of CentOS/7, follow up with the next steps.
 
-## Open a new terminal and run the same commands in the backend folder
- `cd ../backend`
+## Running the application
 
- `npm install`
+#### Clone the repository
+```
+git clone https://github.com/momureithi/My-IP3-Config-Management-Project.git
+```
 
- `npm start`
+#### Change into the `My-IP3-Config-Management-Project` folder
+```
+cd My-IP3-Config-Management-Project
+```
 
- ## Go ahead and add a product (note that the price field only takes a numeric input)
+
+#### Automate deployment of the Yolomy e-Commerce web application using Ansible and Vagrant
+ ```
+ vagrant up --provision
+ ```
+
+#### Access the Yolomy e-Commerce web application from the browser
+
+```
+http://localhost:3000
+```
+
+#### Go ahead and add a product (note that the price field only takes a numeric input)

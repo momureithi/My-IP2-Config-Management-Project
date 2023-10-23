@@ -1,0 +1,9 @@
+---
+# tasks file for network-setup
+- name: Custom Bridge Network Setup
+  docker_network:
+    name: myip3-network
+    state: present
+    attachable: true
+  tags:
+    - networking
