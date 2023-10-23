@@ -15,7 +15,6 @@ services:
       - ./client:/app/client/
     depends_on:
       - backend
-
     networks:
       - myip3-network
 
@@ -30,16 +29,14 @@ services:
       - ./backend:/app/backend/
     environment:
       MONGO_URI: mongodb://mongo:27017/yolomy
-
     depends_on:
       - mongo
-
     networks:
       - myip3-network
 
   mongo:
     image: mongo:latest
-    container_name: yolo-database
+    container_name: myip3-database
     ports:
       - '27017:27017'
     volumes:
@@ -48,11 +45,11 @@ services:
       - myip3-network
 
 networks:
-  yolo_network:
+  network:
     name: myip3-network
     driver: bridge
 
 volumes:
-  mongo-data:
-  backend:
-  client:
+  mongo-data: ./mongo-data:/data/db
+  backend: ./backend:/app/backend/
+  client: ./client:/app/client/

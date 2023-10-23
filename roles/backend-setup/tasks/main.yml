@@ -32,9 +32,3 @@
           MONGO_URI: 'mongodb://myip3-database-container:27017/yolomy'
       tags:
         - backend
-
-  when: backend-folder.stat.isdir is defined and backend-folder.stat.isdir
-  rescue:
-    - name: Handle error during backend dockerization setup
-      debug:
-        msg: 'Backend dockerization setup failed. Please check the logs.'

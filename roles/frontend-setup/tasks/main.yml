@@ -35,8 +35,3 @@
         tty: true
       tags:
         - frontend
-  when: client-directory.stat.isdir is defined and client-directory.stat.isdir
-  rescue:
-    - name: Handle error during client dockerization setup
-      debug:
-        msg: 'Client dockerization setup failed. Please check the logs.'
