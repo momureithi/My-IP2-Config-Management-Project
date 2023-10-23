@@ -21,3 +21,9 @@ The directory structure of the project is organized as follows:
   - `frontend-setup/`: Responsible for setting up the frontend of the application.
 
 - `tasks/`: The `tasks/main.yml` files within each role contain specific tasks related to that role.
+
+## Commands Utilized
+
+```ansible-galaxy init <role-name>``` - to create the specific roles
+
+```ansible-playbook playbook.yaml``` - to run the Ansible playbook
